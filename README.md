@@ -29,7 +29,7 @@ export SPOT="Laniakea-Surf-Report/3672/"
 Schedule hourly forecast refresh.
 ```
 crontab -e
-# 0 * * * * /bin/bash /home/pi/refresh.sh
+# 0 * * * * /bin/bash /home/pi/spindrift/refresh.sh
 ```
 
 If needed, fix `startx` error, "Only console users are allowed to run the X server."
@@ -39,5 +39,5 @@ sudo sed -i -E 's/(allowed_users=)console/\1anybody/' /etc/X11/Xwrapper.config
 
 Launch kiosk (absolute path required).
 ```
-startx ./launch.sh -- -nocursor &
+startx /home/pi/spindrift/launch.sh -- -nocursor &
 ```
