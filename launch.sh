@@ -3,16 +3,13 @@
 # Usage: 
 # startx ./launch.sh -- -nocursor
 
-# Load config.
-source "$(dirname $0)/.env"
-
 # Disable screensaver.
 xset s off
 xset -dpms
 xset s noblank
 
 # Launch Chrome in kiosk mode. Note: Chromium's CLI switches are poorly documented; there's a good reference at https://peter.sh/experiments/chromium-command-line-switches/ 
-chromium-browser "https://magicseaweed.com/$SPOT#msw-js-fct" \
+chromium-browser report.html \
 --disable-gpu \
 --disable-infobars \
 --disable-translate \
