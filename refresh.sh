@@ -7,7 +7,7 @@
 source "$(dirname $0)/.env"
 
 # Update screenshots.
-node screenshot.js "$SPOT"
+node /home/pi/spindrift/screenshot.js "$SPOT"
 
 # Send a command through Chrome's DevTools Protocol.
 devtools() {
