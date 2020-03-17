@@ -10,16 +10,41 @@
 
 <div class="container">
   <div class="box">
-     <img src="img/dayTitle.png" />
+     <div class="header"> — Current Report</div>
+     <!--img src="img/dayTitle.png" /-->
      <img src="img/current.png" />
-     <img src="img/header.png" />
-     <img src="img/dayForecast.png" />
-  </div>
-  <div class="box">
-     <img src="img/weekTitle.png" />
+     <!--img src="img/header.png" /-->
+     <!--img src="img/dayForecast.png" /-->
+     <!--img src="img/weekTitle.png" /-->
+     <div class="header"> — Forecast</div>
      <img src="img/weekForecast.png" />
   </div>
+  <div class="box">
+     <div class="header"></div>
+     <video id=""></video>
+     <div class="header"></div>
+     <video id=""></video>
+  </div>
 </div>
+
+<!-- https://github.com/video-dev/hls.js#getting-started -->
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<script>
+  let sources = {
+  };
+
+  for(let name in sources) {
+	let source = sources[name];
+    let video = document.getElementById(name);
+    let hls = new Hls();
+    hls.loadSource(source);
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED, function() {
+      video.muted = true;
+      video.play();
+    });
+  }
+</script>
 
 </body>
 </html>
