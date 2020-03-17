@@ -41,3 +41,17 @@ Launch kiosk (absolute path required).
 ```
 startx /home/pi/spindrift/launch.sh -- -nocursor &
 ```
+
+## Install Puppeteer
+
+Install Node.js and Puppeteer.
+```
+curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
+sudo apt install -y nodejs
+npm install puppeteer
+```
+
+Get MSW screenshots.
+```
+node screenshot.js
+```
