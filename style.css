@@ -11,3 +11,13 @@
 video, img {
     max-width: 100%;
 }
+.header {
+    box-sizing: border-box;
+    color: rgb(46, 46, 46);
+    font-family: Montserrat;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 29.7px;
+    text-transform: uppercase;
+    margin-top: 10px;
+}
