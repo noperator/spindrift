@@ -26,6 +26,7 @@ let args = process.argv.slice(2);
   // Hide.
   // await page.$eval('#msw-js-fc > div.table-responsive-xs > table > tbody:nth-child(2) > tr.background-clear.msw-js-tide', e => e.setAttribute("style", "display: none"));
   // await page.$eval('#msw-js-fct > header > div', e => e.setAttribute("style", "display: none"));
+  await page.$eval('#corona-message-container', e => e.setAttribute("style", "display: none"));
 
   let elements = {
   // 'dayTitle': 'body > div.cover > div.cover-inner > div.pages.clear-left.clear-right > div > div.msw-fc.msw-js-forecast > div:nth-child(2) > div:nth-child(2) > div > div > div.msw-col-fluid > div > header > h3',
