@@ -4,13 +4,21 @@ If needed, [install Raspbian](https://github.com/noperator/guides/blob/master/in
 
 Install display server, browser, and other dependencies.
 ```
+# Install NodeSource Node.js 10.x repo.
+curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
+
 sudo apt install -y \
 xserver-xorg-core x11-xserver-utils xinit \
 chromium-browser \
-git jq
+nodejs git jq
 ```
 
-Download `websocat`.
+Install Puppeteer.
+```
+npm install puppeteer
+```
+
+Install WebSocat.
 ```
 sudo wget -O /usr/local/bin/websocat $(curl -sk https://api.github.com/repos/vi/websocat/releases | jq '.[0] | .assets[] | select(.name == "websocat_arm-linux-static") | .browser_download_url' -r)
 sudo chmod +x /usr/local/bin/websocat
@@ -40,18 +48,4 @@ sudo sed -i -E 's/(allowed_users=)console/\1anybody/' /etc/X11/Xwrapper.config
 Launch kiosk (absolute path required).
 ```
 startx /home/pi/spindrift/launch.sh -- -nocursor &
-```
-
-## Install Puppeteer
-
-Install Node.js and Puppeteer.
-```
-curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
-sudo apt install -y nodejs
-npm install puppeteer
-```
-
-Get MSW screenshots.
-```
-node screenshot.js
 ```
