@@ -20,4 +20,4 @@ devtools() {
 
 # Reload page.
 echo 'Reloading page.'
-devtools 'Page.reload'
+devtools 'Page.reload' && pkill 'node.*screenshot.js'
