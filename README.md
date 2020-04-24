@@ -38,8 +38,8 @@ Schedule hourly forecast refresh, and save power while display is not in use.
 ```
 crontab -e
 0 *  * * * /bin/bash /home/pi/spindrift/refresh.sh  # Refresh forecast.
-0 8  * * * /usr/bin/vcgencmd 1                      # Turn on display.
-0 22 * * * /usr/bin/vcgencmd 0                      # Turn off display.
+0 8  * * * /usr/bin/vcgencmd display_power 1        # Turn on display.
+0 22 * * * /usr/bin/vcgencmd display_power 0        # Turn off display.
 ```
 
 If needed, fix `startx` error, "Only console users are allowed to run the X server."
