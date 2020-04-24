@@ -12,7 +12,7 @@ node /home/pi/spindrift/screenshot.js "$SPOT"
 # Send a command through Chrome's DevTools Protocol.
 devtools() {
     echo "$@" |
-    websocat -n1 --jsonrpc $(
+    /usr/local/bin/websocat -n1 --jsonrpc $(
         curl -sk http://127.0.0.1:9222/json |
         jq '.[] | select(.url | index("report.html")) | .webSocketDebuggerUrl' -r
     )
