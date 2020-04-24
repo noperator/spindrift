@@ -4,7 +4,7 @@
 # 0 * * * * /bin/bash /home/pi/spindrift/refresh.sh
 
 # Load config.
-source "$(dirname $0)/.env"
+source "$(dirname $0)/config/.env"
 
 # Update screenshots.
 node /home/pi/spindrift/screenshot.js "$SPOT"
