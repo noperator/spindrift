@@ -51,3 +51,8 @@ Launch kiosk (absolute path required).
 ```
 startx /home/pi/spindrift/launch.sh -- -nocursor &
 ```
+
+## Todo
+
+- Turn off display signal while sleeping, rather than blanking it
+- Add weather report
