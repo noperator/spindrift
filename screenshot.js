@@ -12,8 +12,14 @@ let args = process.argv.slice(2);
   const page = await browser.newPage();
 
   process.stdout.write('Loading page...');
-  await page.goto('https://magicseaweed.com/' + args[0], {waitUntil: 'networkidle2'});
-  process.stdout.write('done.\n');
+  try {                                                                     1
+    await page.goto('https://magicseaweed.com/' + args[0], {waitUntil: 'networkidle2'});
+    process.stdout.write('done.\n');
+  }
+  catch(err) {
+    process.stderr.write(err.message);
+    process.exit(1);
+  }
 
   // Fix blank screenshots for elements outside of viewport: https://github.com/puppeteer/puppeteer/issues/2423#issuecomment-590738707
   const viewport = { width: 1440, height: 900, deviceScaleFactor: 2 };
