@@ -31,7 +31,7 @@ let args = process.argv.slice(2);
 
   // Hide.
   await page.$eval('div.wob_df:nth-child(8)', e => e.setAttribute('style', 'display: none'));
-  await page.$eval('div.gic:nth-child(5)', e => e.setAttribute('style', 'width: calc(75px * 7)'));
+  await page.$eval('div.gic:nth-child(5)', e => e.setAttribute('style', 'width: calc(75px * 7); height: 72px'));
   for(let i = 1; i <= 7; i++) {
     await page.$eval('div.wob_df:nth-child(' + i + ')', e => e.setAttribute('class', 'wob_df'));
     await page.$eval('div.wob_df:nth-child(' + i + ') > div:nth-child(1)', e => e.setAttribute('style', 'display: none'));

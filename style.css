@@ -1,12 +1,12 @@
 .container {
-    width: 1420px;
+    width: 1430px;
     height: 880px;
     margin: auto;
 }
 .box {
     width: 47%;
     float: left;
-    padding: 1.5%;
+    padding: 1%;
 }
 video, img {
     max-width: 100%;
