@@ -30,23 +30,18 @@ let args = process.argv.slice(2);
   );
 
   // Hide.
-  // await page.$eval('#msw-js-fc > div.table-responsive-xs > table > tbody:nth-child(2) > tr.background-clear.msw-js-tide', e => e.setAttribute("style", "display: none"));
-  // await page.$eval('#msw-js-fct > header > div', e => e.setAttribute("style", "display: none"));
-  await page.$eval('#corona-message-container', e => e.setAttribute("style", "display: none"));
+  await page.$eval('#corona-message-container', e => e.setAttribute('style', 'display: none'));
 
   let elements = {
-  // 'dayTitle': 'body > div.cover > div.cover-inner > div.pages.clear-left.clear-right > div > div.msw-fc.msw-js-forecast > div:nth-child(2) > div:nth-child(2) > div > div > div.msw-col-fluid > div > header > h3',
   'current': 'body > div.cover > div.cover-inner > div.pages.clear-left.clear-right > div > div.msw-fc.msw-js-forecast > div:nth-child(2) > div:nth-child(2) > div > div > div.msw-col-fluid > div > div.row.margin-bottom',
-  // 'weekTitle': '#msw-js-fct > header',
   'weekForecast': '#tab-7day > div',
-  // 'header': '#msw-js-fc > div.table-responsive-xs > table > thead',
-  // 'dayForecast': '#msw-js-fc > div.table-responsive-xs > table > tbody:nth-child(2)'
   };
 
-  process.stdout.write('Screenshitting...');
+  process.stdout.write('Screenshitting...\n');
   for(var name in elements) {
     var selector = elements[name];
     elementHandle = await page.$(selector);
+    process.stdout.write('- ' + name + '\n');
     await elementHandle.screenshot({path: '/home/pi/spindrift/img/' + name + '.png'});
   }
   process.stdout.write('done.\n');
