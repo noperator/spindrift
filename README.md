@@ -57,3 +57,4 @@ startx /home/pi/spindrift/launch.sh -- -nocursor &
 
 - [ ] Turn off display signal while sleeping, rather than blanking it
 - [x] Add weather report
+- [ ] Load backup streams in order of preference
