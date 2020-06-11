@@ -38,8 +38,9 @@ let args = process.argv.slice(2);
   }
 
   let elements = {
-    'temperature': '#wob_gsp',
-    'precipitation': '#wob_gsp',
+    'temp': '#wob_gsp',
+    'rain': '#wob_gsp',
+    'wind': '#wob_gsp',
     'forecast': 'div.gic:nth-child(5)'
   };
 
@@ -47,9 +48,10 @@ let args = process.argv.slice(2);
   for(var name in elements) {
     var selector = elements[name];
     elementHandle = await page.$(selector);
-    if(name == 'precipitation') {
+    if(name == 'rain')
       await page.click('#wob_rain');
-    }
+    if(name == 'wind')
+      await page.click('#wob_wind');
     process.stdout.write('- ' + name + '\n');
     await elementHandle.screenshot({path: '/home/pi/spindrift/img/' + name + '.png'});
 
