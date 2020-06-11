@@ -11,9 +11,9 @@ let args = process.argv.slice(2);
     });
   const page = await browser.newPage();
 
-  process.stdout.write('Loading page...');
-  try {                                                                     1
-    await page.goto('https://magicseaweed.com/' + args[0], {waitUntil: 'networkidle2'});
+  process.stdout.write('Loading weather forecast...');
+  try {
+    await page.goto('https://www.google.com/search?q=weather forecast ' + args[0], {waitUntil: 'networkidle2'});
     process.stdout.write('done.\n');
   }
   catch(err) {
@@ -30,21 +30,32 @@ let args = process.argv.slice(2);
   );
 
   // Hide.
-  await page.$eval('#corona-message-container', e => e.setAttribute('style', 'display: none'));
+  await page.$eval('div.wob_df:nth-child(8)', e => e.setAttribute('style', 'display: none'));
+  await page.$eval('div.gic:nth-child(5)', e => e.setAttribute('style', 'width: calc(75px * 7)'));
+  for(let i = 1; i <= 7; i++) {
+    await page.$eval('div.wob_df:nth-child(' + i + ')', e => e.setAttribute('class', 'wob_df'));
+    await page.$eval('div.wob_df:nth-child(' + i + ') > div:nth-child(1)', e => e.setAttribute('style', 'display: none'));
+  }
 
   let elements = {
-  'current': 'body > div.cover > div.cover-inner > div.pages.clear-left.clear-right > div > div.msw-fc.msw-js-forecast > div:nth-child(2) > div:nth-child(2) > div > div > div.msw-col-fluid > div > div.row.margin-bottom',
-  'weekForecast': '#tab-7day > div',
+    'temperature': '#wob_gsp',
+    'precipitation': '#wob_gsp',
+    'forecast': 'div.gic:nth-child(5)'
   };
 
   process.stdout.write('Screenshitting...\n');
   for(var name in elements) {
     var selector = elements[name];
     elementHandle = await page.$(selector);
+    if(name == 'precipitation') {
+      await page.click('#wob_rain');
+    }
     process.stdout.write('- ' + name + '\n');
     await elementHandle.screenshot({path: '/home/pi/spindrift/img/' + name + '.png'});
+
   }
   process.stdout.write('done.\n');
+  // await new Promise(resolve => setTimeout(resolve, 10000));
 
   browser.close();
 })();

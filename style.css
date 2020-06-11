@@ -21,3 +21,12 @@ video, img {
     text-transform: uppercase;
     margin-top: 10px;
 }
+.layered-image {
+  position: relative;
+}
+.image-overlay {
+  position: absolute;
+  top:  0px;
+  left: 0px;
+  opacity: .5;
+}
