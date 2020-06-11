@@ -1,3 +1,3 @@
 #!/bin/bash
 
-startx ./launch.sh -- -nocursor &
+startx "$(dirname $0)/launch.sh" -- -nocursor &

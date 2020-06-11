@@ -34,9 +34,10 @@ Specify surf spot in `.env` config file. For example, pull the string `Laniakea-
 export SPOT="Laniakea-Surf-Report/3672/"
 ```
 
-Schedule hourly forecast refresh, and save power while display is not in use.
+Start at boot, schedule hourly forecast refresh, and save power while display is not in use.
 ```
 crontab -e
+@reboot    /bin/bash /home/pi/spindrift/startx.sh   # Start spindrift.
 0 *  * * * /bin/bash /home/pi/spindrift/refresh.sh  # Refresh forecast.
 0 8  * * * /usr/bin/vcgencmd display_power 1        # Turn on display.
 0 22 * * * /usr/bin/vcgencmd display_power 0        # Turn off display.
@@ -47,7 +48,7 @@ If needed, fix `startx` error, "Only console users are allowed to run the X serv
 sudo sed -i -E 's/(allowed_users=)console/\1anybody/' /etc/X11/Xwrapper.config
 ```
 
-Launch kiosk (absolute path required).
+Launch kiosk manually (absolute path required).
 ```
 startx /home/pi/spindrift/launch.sh -- -nocursor &
 ```

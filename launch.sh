@@ -9,7 +9,7 @@ xset -dpms
 xset s noblank
 
 # Launch Chrome in kiosk mode. Note: Chromium's CLI switches are poorly documented; there's a good reference at https://peter.sh/experiments/chromium-command-line-switches/ 
-chromium-browser report.html \
+chromium-browser "$(dirname $0)/report.html" \
 --disable-component-update \
 --disable-gpu \
 --disable-infobars \
