@@ -33,20 +33,50 @@
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script src="config/streams.js"></script>
 <script>
-  for (let i = 0; i < streams.length; i++) {
-    let stream = streams[i];
-    if (stream["id"] == "0")
-      continue;
-    let video = document.getElementById("video-" + stream["id"]);
-    document.getElementById("header-" + stream["id"]).innerHTML = stream["title"] + " (" + stream["source"] + ")";
+
+  // Check if an HLS stream is available.
+  function check(url) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('HEAD', url, false);
+    xhr.send();
+    if (xhr.status != '200')
+	  return false;
+    else
+      return true;
+  }
+
+  // Attach an HLS stream to a video element.
+  function load(video, url) {
     let hls = new Hls();
-    hls.loadSource(stream["url"]);
+    hls.loadSource(url);
     hls.attachMedia(video);
     hls.on(Hls.Events.MANIFEST_PARSED, function() {
       video.muted = true;
       video.play();
     });
   }
+
+  // Sort streams.js array of dicts by priority, so lower ones are loaded first.
+  streams.sort(function(first, second) {
+    return first.priority - second.priority;
+  });
+
+  // For each video tag, attempt to load the first available HLS stream.
+  let videos = document.getElementsByTagName('video');
+  let s = 0;
+  for (let v = 1; v <= videos.length; v++) {
+    for (; s < streams.length; s++) {
+      let stream = streams[s];
+      if (!check(stream['url']))
+        continue;
+      document.getElementById('header-' + v).innerHTML =
+        stream['title'] + ' (' + stream['source'] + ')';
+	  load(videos.item(v - 1), stream['url']);
+	  s += 1;
+	  break;
+    }
+  }
+
 </script>
 
 </body>
