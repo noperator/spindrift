@@ -62,7 +62,6 @@ let args = process.argv.slice(2);
     process.stdout.write('- ' + name + '\n');
     await elementHandle.screenshot({path: '/home/pi/spindrift/img/' + name + '.png'});
   }
-  process.stdout.write('done!\n');
 
   browser.close();
 })();

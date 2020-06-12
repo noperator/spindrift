@@ -23,3 +23,8 @@ devtools() {
 echo 'Reloading page.'
 devtools 'Page.reload'
 pkill 'node.*screenshot.js'
+
+# Prevent showing stale data if the next refresh fails for some reason.
+echo 'Clearing screenshots.'
+sleep 5
+find img -iname '*.png' -delete
