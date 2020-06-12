@@ -40,7 +40,7 @@
     xhr.open('HEAD', url, false);
     xhr.send();
     if (xhr.status != '200')
-	  return false;
+      return false;
     else
       return true;
   }
@@ -71,9 +71,9 @@
         continue;
       document.getElementById('header-' + v).innerHTML =
         stream['title'] + ' (' + stream['source'] + ')';
-	  load(videos.item(v - 1), stream['url']);
-	  s += 1;
-	  break;
+      load(videos.item(v - 1), stream['url']);
+      s += 1;
+      break;
     }
   }
 

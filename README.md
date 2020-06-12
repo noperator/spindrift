@@ -16,8 +16,8 @@ Spindrift displays a dashboard of the following components, refreshed hourly:
 - Live cam streams from user-specified sources (e.g., Surfline)
 
 Here's how it works:
-- Fetches hourly forecast data with [Puppeteer](https://github.com/puppeteer/puppeteer) (headless Chrome) scheduled in a cron job
-- Renders the forecast, along with live cam streams, in kiosk-mode Chrome on a standalone X server
+- Fetches hourly forecast data with Puppeteer (headless Chrome) scheduled in a cron job
+- Renders the forecast, along with live cam streams, in Chrome running in kiosk mode and controlled by DevTools Protocol on a standalone X server
 - Runs on a "headless" Raspberry Pi controlled remotely via SSH
 - (Optional) Displays on an old, beautiful, hacked Apple iMac G4 17" 1440x900 px
 
