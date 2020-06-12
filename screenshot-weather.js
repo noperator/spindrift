@@ -29,10 +29,10 @@ let args = process.argv.slice(2);
     Object.assign({}, viewport, { height: fullPageSize.height })
   );
 
-  // Hide.
+  // Prepare page by hiding/resizing elements.
   await page.$eval('div.wob_df:nth-child(8)', e => e.setAttribute('style', 'display: none'));
   await page.$eval('div.gic:nth-child(5)', e => e.setAttribute('style', 'width: calc(75px * 7); height: 72px'));
-  for(let i = 1; i <= 7; i++) {
+  for (let i = 1; i <= 7; i++) {
     await page.$eval('div.wob_df:nth-child(' + i + ')', e => e.setAttribute('class', 'wob_df'));
     await page.$eval('div.wob_df:nth-child(' + i + ') > div:nth-child(1)', e => e.setAttribute('style', 'display: none'));
   }
@@ -41,23 +41,28 @@ let args = process.argv.slice(2);
     'temp': '#wob_gsp',
     'rain': '#wob_gsp',
     'wind': '#wob_gsp',
-    'forecast': 'div.gic:nth-child(5)'
+    'weather-forecast': 'div.gic:nth-child(5)'
   };
 
-  process.stdout.write('Screenshitting...\n');
-  for(var name in elements) {
-    var selector = elements[name];
+  process.stdout.write('Screenshitting:\n');
+  for (let name in elements) {
+    let selector = elements[name];
     elementHandle = await page.$(selector);
-    if(name == 'rain')
-      await page.click('#wob_rain');
-    if(name == 'wind')
-      await page.click('#wob_wind');
+    switch (name) {
+      case 'temp':
+        await page.click('#wob_temp');
+        break;
+      case 'rain':
+        await page.click('#wob_rain');
+        break;
+      case 'wind':
+        await page.click('#wob_wind');
+        break;
+    }
     process.stdout.write('- ' + name + '\n');
     await elementHandle.screenshot({path: '/home/pi/spindrift/img/' + name + '.png'});
-
   }
-  process.stdout.write('done.\n');
-  // await new Promise(resolve => setTimeout(resolve, 10000));
+  process.stdout.write('done!\n');
 
   browser.close();
 })();

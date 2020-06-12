@@ -29,22 +29,22 @@ let args = process.argv.slice(2);
     Object.assign({}, viewport, { height: fullPageSize.height })
   );
 
-  // Hide.
+  // Prepare page by hiding/resizing elements.
   await page.$eval('#corona-message-container', e => e.setAttribute('style', 'display: none'));
 
   let elements = {
-  'current': 'body > div.cover > div.cover-inner > div.pages.clear-left.clear-right > div > div.msw-fc.msw-js-forecast > div:nth-child(2) > div:nth-child(2) > div > div > div.msw-col-fluid > div > div.row.margin-bottom',
-  'weekForecast': '#tab-7day > div',
+    'current': 'body > div.cover > div.cover-inner > div.pages.clear-left.clear-right > div > div.msw-fc.msw-js-forecast > div:nth-child(2) > div:nth-child(2) > div > div > div.msw-col-fluid > div > div.row.margin-bottom',
+    'surf-forecast': '#tab-7day > div',
   };
 
-  process.stdout.write('Screenshitting...\n');
+  process.stdout.write('Screenshitting:\n');
   for(var name in elements) {
     var selector = elements[name];
     elementHandle = await page.$(selector);
     process.stdout.write('- ' + name + '\n');
     await elementHandle.screenshot({path: '/home/pi/spindrift/img/' + name + '.png'});
   }
-  process.stdout.write('done.\n');
+  process.stdout.write('done!\n');
 
   browser.close();
 })();
