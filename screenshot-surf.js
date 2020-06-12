@@ -31,6 +31,10 @@ let args = process.argv.slice(2);
 
   // Prepare page by hiding/resizing elements.
   await page.$eval('#corona-message-container', e => e.setAttribute('style', 'display: none'));
+  for (let i = 1; i <= 7; i++) {
+    await page.$eval('.scrubber-forecast-graph-wind > div:nth-child(2) > div:nth-child(1) > div:nth-child(' + i + ') > div:nth-child(1) > div:nth-child(1)', e => e.setAttribute('style', 'display: none'));
+    await page.$eval('.scrubber-forecast-graph > div:nth-child(2) > div:nth-child(1) > div:nth-child(' + i + ') > div:nth-child(2)', e => e.setAttribute('style', 'padding-top: 0px'));
+  }
 
   let elements = {
     'current': 'body > div.cover > div.cover-inner > div.pages.clear-left.clear-right > div > div.msw-fc.msw-js-forecast > div:nth-child(2) > div:nth-child(2) > div > div > div.msw-col-fluid > div > div.row.margin-bottom',
