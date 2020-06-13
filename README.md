@@ -88,3 +88,4 @@ sudo sed -i -E 's/(allowed_users=)console/\1anybody/' /etc/X11/Xwrapper.config
 - [x] Add weather report
 - [x] Load backup streams in order of preference
 - [ ] Merge screenshot scripts
+- [ ] Consolidate config files into a single JavaScript file, if possible
