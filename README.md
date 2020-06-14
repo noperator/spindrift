@@ -21,7 +21,7 @@ Here's how it works:
 - Runs on a "headless" Raspberry Pi controlled remotely via SSH
 - (Optional) Displays on an old, beautiful, hacked Apple iMac G4 17" 1440x900 px
 
-### Built With
+### Built with
 
 - Chromium
 - [jq](https://github.com/stedolan/jq)
@@ -29,7 +29,7 @@ Here's how it works:
 - [WebSocat](https://github.com/vi/websocat)
 - X server
 
-## Getting Started
+## Getting started
 
 ### Prerequisites
 
@@ -87,13 +87,13 @@ If needed, fix `startx` error, "Only console users are allowed to run the X serv
 sudo sed -i -E 's/(allowed_users=)console/\1anybody/' /etc/X11/Xwrapper.config
 ```
 
-## Back Matter
+## Back matter
 
-### Additional References
+### See also
 
 - [TunaSurf/ShouldIShred: Web app to check surf conditions at your local spots](https://github.com/TunaSurf/ShouldIShred)
 
-### To-Do
+### To-do
 
 - [ ] Turn off display signal while sleeping, rather than blanking it
 - [x] Add weather report
