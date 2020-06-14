@@ -21,9 +21,17 @@ Here's how it works:
 - Runs on a "headless" Raspberry Pi controlled remotely via SSH
 - (Optional) Displays on an old, beautiful, hacked Apple iMac G4 17" 1440x900 px
 
+### Built With
+
+- Chromium
+- [jq](https://github.com/stedolan/jq)
+- [Puppeteer](https://github.com/puppeteer/puppeteer)
+- [WebSocat](https://github.com/vi/websocat)
+- X server
+
 ## Getting Started
 
-### Dependencies
+### Prerequisites
 
 If needed, [install Raspbian](https://github.com/noperator/guides/blob/master/install_raspbian.md).
 
@@ -36,26 +44,21 @@ git clone https://github.com/noperator/spindrift && cd spindrift
 ```
 
 This'll do a few things:
-- Install dependencies
-  - [X server](https://github.com/freedesktop/xorg-xserver)
-  - [Chromium](https://github.com/chromium/chromium)
-  - [jq](https://github.com/stedolan/jq)
-  - [Puppeteer](https://github.com/puppeteer/puppeteer)
-  - [WebSocat](https://github.com/vi/websocat)
+- Install [dependencies](#built-with)
 - Schedule cron jobs
   - Start at boot
   - Schedule hourly forecast refresh
-  - Save power while display is not in use
+  - Turn off display from 10 PM–8 AM (presumably while not in use)
 
 ### Configure
 
-Next, specify your surf spot and weather location in the `config/.env` config file. For example, pull the string `Ala-Moana-Surf-Report/661/` from Ala Moana's surf forecast URL `https://magicseaweed.com/Ala-Moana-Surf-Report/661/`.
+Specify your surf spot and weather location in the `config/.env` config file. For example, pull the string `Ala-Moana-Surf-Report/661/` from Ala Moana's surf forecast URL `https://magicseaweed.com/Ala-Moana-Surf-Report/661/`.
 ```
 export SPOT="Ala-Moana-Surf-Report/661/"
 export LOCATION="Waikiki HI"
 ```
 
-Finally, configure `config/streams.js` with the HLS live cam streams you'd like to display.
+Configure `config/streams.js` with the HLS live cam streams you'd like to display.
 ```
 "priority": "1",
 "url":      "<URL>",
@@ -63,7 +66,9 @@ Finally, configure `config/streams.js` with the HLS live cam streams you'd like 
 "source":   "Surfline"
 ```
 
-### Executing
+Note that this was developed with a 1440 x 900 px display in mind. If you need to make any display adjustments, you may do so in `screenshot-*.js`, `launch.sh`, and `style.css`.
+
+### Usage
 
 The kiosk will launch automatically when you boot the Raspberry Pi, but you can also start it manually:
 ```
@@ -82,7 +87,13 @@ If needed, fix `startx` error, "Only console users are allowed to run the X serv
 sudo sed -i -E 's/(allowed_users=)console/\1anybody/' /etc/X11/Xwrapper.config
 ```
 
-## Todo
+## Back Matter
+
+### Additional References
+
+- [TunaSurf/ShouldIShred: Web app to check surf conditions at your local spots](https://github.com/TunaSurf/ShouldIShred)
+
+### To-Do
 
 - [ ] Turn off display signal while sleeping, rather than blanking it
 - [x] Add weather report
