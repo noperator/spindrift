@@ -23,10 +23,10 @@ Here's how it works:
 
 As a bit of background on the `.m3u8` HLS live cam streams that Spindrift displays, here's a condensed explanation from [Wikipedia](https://en.wikipedia.org/wiki/M3U):
 > M3U is a plain text computer file format for a multimedia playlist that specifies the locations of one or more media files. The M3U file can also include comments, prefaced by the "#" character.
-  - In extended M3U, "#" also introduces extended M3U directives which are terminated by a colon ":" if they support parameters.
-  - The Unicode version of M3U is M3U8, which uses UTF-8-encoded characters.
+> - In extended M3U, "#" also introduces extended M3U directives which are terminated by a colon ":" if they support parameters.
+> - The Unicode version of M3U is M3U8, which uses UTF-8-encoded characters.
 >
-Extended M3U8 files are the basis for HTTP Live Streaming (HLS), a format originally developed by Apple to stream video and radio to iOS devices, and later standardized by the IETF. In HLS, a master playlist references segment playlists which usually contain URLs for short parts of the media stream.
+> Extended M3U8 files are the basis for HTTP Live Streaming (HLS), a format originally developed by Apple to stream video and radio to iOS devices, and later standardized by the IETF. In HLS, a master playlist references segment playlists which usually contain URLs for short parts of the media stream.
 
 ### Built with
 
