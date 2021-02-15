@@ -99,9 +99,10 @@ func (page *Page) checkWeather(location string) error {
 
 func (page *Page) checkSurf(spot string) error {
 	// Load surf forecast page.
-	if _, err := page.Goto(fmt.Sprintf("https://magicseaweed.com/%s", spot), playwright.PageGotoOptions{
-		WaitUntil: playwright.String("networkidle"),
-	}); err != nil {
+	// if _, err := page.Goto(fmt.Sprintf("https://magicseaweed.com/%s", spot), playwright.PageGotoOptions{
+	// 	WaitUntil: playwright.String("networkidle"),
+	// }); err != nil {
+	if _, err := page.Goto(fmt.Sprintf("https://magicseaweed.com/%s", spot)); err != nil {
 		return fmt.Errorf("could not load surf forecast page: %w", err)
 	}
 
@@ -112,8 +113,14 @@ func (page *Page) checkSurf(spot string) error {
 
 	// Remove header from wind graph.
 	if _, err := page.EvalOnSelectorAll(".scrubber-graph-header:below(span:text(\"Wind\"))", "heads => heads.map(head => head.setAttribute('style', 'display: none'))"); err != nil {
-		return fmt.Errorf("could not remove wind headers: %w", err)
+		return fmt.Errorf("could not remove wind header: %w", err)
 	}
+
+	// Wait for map to load.
+	// if _, err := page.WaitForFunction("() => document.querySelector('img[itemprop=maps]').getAttribute('src').includes('maps')"); err != nil {
+	// 	return fmt.Errorf("could not wait for map to load: %w", err)
+	// }
+	page.WaitForLoadState("networkidle")
 
 	for elem, sel := range map[string]string{
 		"current": "div:below(span:text(\"Current Surf Report\"))",
