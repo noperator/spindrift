@@ -174,13 +174,45 @@ func main() {
 		os.Exit(1)
 	}()
 
-	newPage, err := context.NewPage()
-	assertErrorToNilf("could not create page: %v", err)
-	page := Page{newPage}
-	log.Println("checking weather")
-	assertErrorToNilf("could not check weather: %v", page.checkWeather(config.Location))
-	log.Println("checking surf")
-	assertErrorToNilf("could not check surf: %v", page.checkSurf(config.Spot))
+	errs := make(chan error)
+
+	go func() {
+		newPage, err := context.NewPage()
+		if err != nil {
+			errs <- fmt.Errorf("could not create page: %w", err)
+			return
+		}
+		page := Page{newPage}
+		log.Println("checking weather")
+		if err := page.checkWeather(config.Location); err != nil {
+			errs <- fmt.Errorf("could not check weather: %w", err)
+			return
+		}
+		errs <- nil
+		return
+	}()
+
+	go func() {
+		newPage, err := context.NewPage()
+		if err != nil {
+			errs <- fmt.Errorf("could not create page: %w", err)
+			return
+		}
+		page := Page{newPage}
+		log.Println("checking surf")
+		if err := page.checkSurf(config.Spot); err != nil {
+			errs <- fmt.Errorf("could not check surf: %w", err)
+			return
+		}
+		errs <- nil
+		return
+	}()
+
+	// Wait for both pages to finish.
+	for i := 0; i < 2; i++ {
+		err := <-errs
+		assertErrorToNilf("could not check forecast: %v", err)
+	}
 
 	// time.Sleep(10000 * time.Second)
 
