@@ -33,10 +33,10 @@ type Config struct {
 	Location string
 }
 
-func (page *Page) weather(location string) error {
+func (page *Page) checkWeather(location string) error {
 	// Load weather forecast page.
 	if _, err := page.Goto(fmt.Sprintf("https://www.google.com/search?q=weather forecast %s", location)); err != nil {
-		return fmt.Errorf("could not load forecast page: %w", err)
+		return fmt.Errorf("could not load weather forecast page: %w", err)
 	}
 
 	// Get width of day in forecast.
@@ -96,6 +96,47 @@ func (page *Page) weather(location string) error {
 	return nil
 }
 
+func (page *Page) checkSurf(spot string) error {
+	// Load surf forecast page.
+	if _, err := page.Goto(fmt.Sprintf("https://magicseaweed.com/%s", spot), playwright.PageGotoOptions{
+		WaitUntil: playwright.String("networkidle"),
+	}); err != nil {
+		return fmt.Errorf("could not load surf forecast page: %w", err)
+	}
+
+	// if _, err := page.EvalOnSelector("a:has(span:text(\"Plan your next session\"))", "e => e.setAttribute('style', 'display: none')"); err != nil {
+	// 	return fmt.Errorf("could not hide session plan banner: %w", err)
+	// }
+
+	// Remove padding from surf graph.
+	if _, err := page.EvalOnSelectorAll(".scrubber-bars-container", "bars => bars.map(bar => bar.setAttribute('style', 'padding-top: 0px'))"); err != nil {
+		return fmt.Errorf("could not remove surf padding: %w", err)
+	}
+
+	// Remove header from wind graph.
+	if _, err := page.EvalOnSelectorAll(".scrubber-graph-header:below(span:text(\"Wind\"))", "heads => heads.map(head => head.setAttribute('style', 'display: none'))"); err != nil {
+		return fmt.Errorf("could not remove wind headers: %w", err)
+	}
+
+	for element, selector := range map[string]string{
+		"current": "div:below(span:text(\"Current Surf Report\"))",
+		"surf":    "#tab-7day .scrubber-forecast-graph-container",
+	} {
+		log.Printf("taking a screenshit of %s\n", element)
+		elem, err := page.QuerySelector(selector)
+		if err != nil {
+			return fmt.Errorf("could not query forecast element: %w", err)
+		}
+		if _, err = elem.Screenshot(playwright.ElementHandleScreenshotOptions{
+			Path: playwright.String(fmt.Sprintf("img/%s.png", element)),
+		}); err != nil {
+			return fmt.Errorf("could not take screenshit: %w", err)
+		}
+	}
+
+	return nil
+}
+
 func main() {
 
 	headful := flag.Bool("f", false, "headful mode")
@@ -124,6 +165,7 @@ func main() {
 	assertErrorToNilf("could not launch browser: %v", err)
 	context, err := browser.NewContext(playwright.BrowserNewContextOptions{
 		AcceptDownloads:   playwright.Bool(true),
+		UserAgent:         playwright.String("User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"),
 		DeviceScaleFactor: playwright.Float(2),
 		Viewport: &playwright.BrowserNewContextViewport{
 			Width:  playwright.Int(1440),
@@ -145,7 +187,10 @@ func main() {
 	newPage, err := context.NewPage()
 	assertErrorToNilf("could not create page: %v", err)
 	page := Page{newPage}
-	assertErrorToNilf("could not check weather: %v", page.weather(config.Location))
+	log.Println("checking weather")
+	assertErrorToNilf("could not check weather: %v", page.checkWeather(config.Location))
+	log.Println("checking surf")
+	assertErrorToNilf("could not check surf: %v", page.checkSurf(config.Spot))
 
 	// time.Sleep(10000 * time.Second)
 
