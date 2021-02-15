@@ -33,17 +33,25 @@ type Config struct {
 	Location string
 }
 
+func (page *Page) screenshit(elem string, sel string) error {
+	log.Printf("taking a screenshit: %s\n", elem)
+	elemHand, err := page.QuerySelector(sel)
+	if err != nil {
+		return fmt.Errorf("could not query selector: %w", err)
+	}
+	if _, err = elemHand.Screenshot(playwright.ElementHandleScreenshotOptions{
+		Path: playwright.String(fmt.Sprintf("img/%s.png", elem)),
+	}); err != nil {
+		return fmt.Errorf("could not take screenshit: %w", err)
+	}
+	return nil
+}
+
 func (page *Page) checkWeather(location string) error {
 	// Load weather forecast page.
 	if _, err := page.Goto(fmt.Sprintf("https://www.google.com/search?q=weather forecast %s", location)); err != nil {
 		return fmt.Errorf("could not load weather forecast page: %w", err)
 	}
-
-	// Get width of day in forecast.
-	// dayWidth, err := page.EvalOnSelector(".wob_df", "e => e.offsetWidth")
-	// if err != nil {
-	// 	return fmt.Errorf("could not get width: %w", err)
-	// }
 
 	// Resize forecast.
 	if _, err := page.EvalOnSelector("#wob_dp", "e => e.setAttribute('style', 'width: calc(75px * 7); height: 72px')"); err != nil {
@@ -70,26 +78,19 @@ func (page *Page) checkWeather(location string) error {
 		return fmt.Errorf("could not hide day of week: %w", err)
 	}
 
-	for element, selector := range map[string]string{
+	for elem, sel := range map[string]string{
 		"temp":    "#wob_gsp",
 		"rain":    "#wob_gsp",
 		"wind":    "#wob_gsp",
 		"weather": "#wob_dp",
 	} {
-		log.Printf("taking a screenshit of %s\n", element)
-		if element != "weather" {
-			if err := page.Click(fmt.Sprintf("#wob_%s", element)); err != nil {
-				return fmt.Errorf("could not click forecast element: %w", err)
+		if elem != "weather" {
+			if err := page.Click(fmt.Sprintf("#wob_%s", elem)); err != nil {
+				return fmt.Errorf("could not click element: %w", err)
 			}
 		}
-		elem, err := page.QuerySelector(selector)
-		if err != nil {
-			return fmt.Errorf("could not query forecast element: %w", err)
-		}
-		if _, err = elem.Screenshot(playwright.ElementHandleScreenshotOptions{
-			Path: playwright.String(fmt.Sprintf("img/%s.png", element)),
-		}); err != nil {
-			return fmt.Errorf("could not take screenshit: %w", err)
+		if err := page.screenshit(elem, sel); err != nil {
+			return fmt.Errorf("could not screenshit %s: %w", elem, err)
 		}
 	}
 
@@ -104,10 +105,6 @@ func (page *Page) checkSurf(spot string) error {
 		return fmt.Errorf("could not load surf forecast page: %w", err)
 	}
 
-	// if _, err := page.EvalOnSelector("a:has(span:text(\"Plan your next session\"))", "e => e.setAttribute('style', 'display: none')"); err != nil {
-	// 	return fmt.Errorf("could not hide session plan banner: %w", err)
-	// }
-
 	// Remove padding from surf graph.
 	if _, err := page.EvalOnSelectorAll(".scrubber-bars-container", "bars => bars.map(bar => bar.setAttribute('style', 'padding-top: 0px'))"); err != nil {
 		return fmt.Errorf("could not remove surf padding: %w", err)
@@ -118,19 +115,12 @@ func (page *Page) checkSurf(spot string) error {
 		return fmt.Errorf("could not remove wind headers: %w", err)
 	}
 
-	for element, selector := range map[string]string{
+	for elem, sel := range map[string]string{
 		"current": "div:below(span:text(\"Current Surf Report\"))",
 		"surf":    "#tab-7day .scrubber-forecast-graph-container",
 	} {
-		log.Printf("taking a screenshit of %s\n", element)
-		elem, err := page.QuerySelector(selector)
-		if err != nil {
-			return fmt.Errorf("could not query forecast element: %w", err)
-		}
-		if _, err = elem.Screenshot(playwright.ElementHandleScreenshotOptions{
-			Path: playwright.String(fmt.Sprintf("img/%s.png", element)),
-		}); err != nil {
-			return fmt.Errorf("could not take screenshit: %w", err)
+		if err := page.screenshit(elem, sel); err != nil {
+			return fmt.Errorf("could not screenshit %s: %w", elem, err)
 		}
 	}
 
