@@ -8,14 +8,16 @@ import (
 	"log"
 	"os"
 	"os/signal"
-	// "os/user"
-	// "path/filepath"
+	"os/user"
+	"path/filepath"
 	// "strings"
 	// "time"
 
 	"github.com/mxschmitt/playwright-go"
 	"github.com/pelletier/go-toml"
 )
+
+var homeDir string
 
 func assertErrorToNilf(message string, err error) {
 	if err != nil {
@@ -40,7 +42,7 @@ func (page *Page) screenshit(elem string, sel string) error {
 		return fmt.Errorf("could not query selector: %w", err)
 	}
 	if _, err = elemHand.Screenshot(playwright.ElementHandleScreenshotOptions{
-		Path: playwright.String(fmt.Sprintf("img/%s.png", elem)),
+		Path: playwright.String(filepath.Join(homeDir, "spindrift", "img", fmt.Sprintf("%s.png", elem))),
 	}); err != nil {
 		return fmt.Errorf("could not take screenshit: %w", err)
 	}
@@ -48,6 +50,7 @@ func (page *Page) screenshit(elem string, sel string) error {
 }
 
 func (page *Page) checkWeather(location string) error {
+
 	// Load weather forecast page.
 	if _, err := page.Goto(fmt.Sprintf("https://www.google.com/search?q=weather forecast %s", location)); err != nil {
 		return fmt.Errorf("could not load weather forecast page: %w", err)
@@ -133,17 +136,18 @@ func main() {
 	headful := flag.Bool("f", false, "headful mode")
 	flag.Parse()
 
+	// Get user info for home directory later on.
+	usr, err := user.Current()
+	assertErrorToNilf("could not get current user: %v", err)
+	homeDir = usr.HomeDir
+
 	// Load config.
-	configFile, err := ioutil.ReadFile("config.toml")
+	configFile, err := ioutil.ReadFile(filepath.Join(homeDir, "spindrift", "config.toml"))
 	assertErrorToNilf("could not read config: %v", err)
 	config := Config{}
 	err = toml.Unmarshal(configFile, &config)
 	assertErrorToNilf("could not load config: %v", err)
 	// fmt.Println(config)
-
-	// Get user info for home directory later on.
-	// usr, err := user.Current()
-	// assertErrorToNilf("could not get current user: %v", err)
 
 	// Load Playwright, browser, and page.
 	log.Println("setting up")
