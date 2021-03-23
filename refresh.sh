@@ -1,18 +1,16 @@
 #!/bin/bash
 
 DIR=$(dirname $0)
+# PATH="/home/pi/go/bin/spindrift:$PATH"
 
 # Prevent showing stale data if the next refresh fails for some reason.
 echo 'Clearing old screenshots.'
 find "$DIR/img" -iname '*.png' -delete
 
-# Load config and pull latest screenshots.
-source "$DIR/config/.env"
-node /home/pi/spindrift/screenshot-surf.js    "$SPOT"
-node /home/pi/spindrift/screenshot-weather.js "$LOCATION"
+# Pull latest screenshots.
+/home/pi/go/bin/spindrift
 
 # Reload page.
 source "$DIR/devtools.sh"
 echo 'Reloading page.'
-devtools 'Page.reload'
-pkill 'node.*screenshot.js'
+devtools '{"id":1,"method":"Page.reload"}'
