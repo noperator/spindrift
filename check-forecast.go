@@ -166,7 +166,7 @@ func main() {
 		AcceptDownloads:   playwright.Bool(true),
 		UserAgent:         playwright.String("User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"),
 		DeviceScaleFactor: playwright.Float(2),
-		Viewport: &playwright.BrowserNewContextViewport{
+		Viewport: &playwright.BrowserNewContextOptionsViewport{
 			Width:  playwright.Int(1440),
 			Height: playwright.Int(900),
 		},
