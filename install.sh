@@ -15,7 +15,10 @@ sudo apt install -y \
     nodejs jq
 
 # Install Puppeteer (https://github.com/puppeteer/puppeteer).
-npm install puppeteer
+# npm install puppeteer
+
+# Install Spindrift forecast checker. This installs Playwright.
+go install
 
 # Install WebSocat (https://github.com/vi/websocat).
 sudo wget -O /usr/local/bin/websocat $(curl -sk https://api.github.com/repos/vi/websocat/releases |
