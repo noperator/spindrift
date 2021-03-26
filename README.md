@@ -61,7 +61,7 @@ This'll do a few things:
 
 ### Configure
 
-Specify your surf spot and weather location in the `config.toml` config file. For example, pull the string `Ala-Moana-Surf-Report/661/` from Ala Moana's surf forecast URL `https://magicseaweed.com/Ala-Moana-Surf-Report/661/`.
+Specify your surf spot and weather location in the `config/params.toml` config file. For example, pull the string `Ala-Moana-Surf-Report/661/` from Ala Moana's surf forecast URL `https://magicseaweed.com/Ala-Moana-Surf-Report/661/`.
 
 ```
 spot = "Ala-Moana-Surf-Report/661/"

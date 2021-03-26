@@ -145,7 +145,7 @@ func main() {
 	homeDir = usr.HomeDir
 
 	// Load config.
-	configFile, err := ioutil.ReadFile(filepath.Join(homeDir, "spindrift", "config.toml"))
+	configFile, err := ioutil.ReadFile(filepath.Join(homeDir, "spindrift", "config", "params.toml"))
 	assertErrorToNilf("could not read config: %v", err)
 	config := Config{}
 	err = toml.Unmarshal(configFile, &config)
