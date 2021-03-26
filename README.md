@@ -24,8 +24,8 @@ As a bit of background on the `.m3u8` HLS live cam streams that Spindrift displa
 
 ### Features
 
-- Fetches hourly forecast data with Playwright (headless Chrome) scheduled in a cron job
-- Renders the forecast, along with live cam streams, in Chrome running in kiosk mode and controlled by DevTools Protocol on a standalone X server
+- Fetches hourly forecast data with Playwright scheduled in a cron job
+- Renders the forecast, along with live cam streams, in Chromium running in kiosk mode and controlled by DevTools Protocol on a standalone X server
 - Runs on a "headless" Raspberry Pi controlled remotely via SSH
 - (Optional) Displays on an old, beautiful, hacked Apple iMac G4 17" 1440x900 px
 
@@ -45,7 +45,8 @@ If needed, [install Raspbian](https://github.com/noperator/guides/blob/master/in
 
 ### Install
 
-Clone this repo and run the installer script.
+Clone this repo to your home directory, and run the installer script.
+
 ```
 git clone https://github.com/noperator/spindrift && cd spindrift
 ./install.sh
@@ -76,7 +77,7 @@ Configure `config/streams.js` with the HLS live cam streams you'd like to displa
 "source":   "Surfline"
 ```
 
-Note that this was developed with a 1440 x 900 px display in mind. If you need to make any display adjustments, you may do so in `screenshot-*.js`, `launch.sh`, and `style.css`.
+Note that this was developed with a 1440 x 900 px display in mind. If you need to make any display adjustments, you may do so in `check-forecast.go, `launch.sh`, and `style.css`.
 
 ### Usage
 
@@ -112,6 +113,7 @@ sudo sed -i -E 's/(allowed_users=)console/\1anybody/' /etc/X11/Xwrapper.config
 - [x] Add weather report
 - [x] Load backup streams in order of preference
 - [x] Merge screenshot scripts
-- [ ] Consolidate config files into a single JavaScript file, if possible
+- [ ] ~~Consolidate config files into a single JavaScript file, if possible~~
 - [ ] Manually rotate through streams
 - [ ] Describe installing Playwright with Chromium on Raspberry Pi
+- [ ] Move display dimensions to config file
