@@ -21,4 +21,4 @@ chromium-browser "$(dirname $0)/report.html" \
 --noerrdialogs \
 --remote-debugging-port=9222 \
 --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' \
---window-size=1440,900
+--window-size="$1,$2"

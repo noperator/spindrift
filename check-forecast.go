@@ -33,6 +33,8 @@ type Page struct {
 type Config struct {
 	Spot     string
 	Location string
+	Width    int
+	Height   int
 }
 
 func (page *Page) screenshit(elem string, sel string) error {
@@ -103,7 +105,7 @@ func (page *Page) checkWeather(location string) error {
 func (page *Page) checkSurf(spot string) error {
 	// Load surf forecast page.
 	if _, err := page.Goto(fmt.Sprintf("https://magicseaweed.com/%s", spot), playwright.PageGotoOptions{
-		Timeout: playwright.Float(60000),
+		Timeout:   playwright.Float(60000),
 		WaitUntil: playwright.WaitUntilStateDomcontentloaded,
 	}); err != nil {
 		return fmt.Errorf("could not load surf forecast page: %w", err)
@@ -167,8 +169,8 @@ func main() {
 		UserAgent:         playwright.String("User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"),
 		DeviceScaleFactor: playwright.Float(2),
 		Viewport: &playwright.BrowserNewContextOptionsViewport{
-			Width:  playwright.Int(1440),
-			Height: playwright.Int(900),
+			Width:  playwright.Int(config.Width),
+			Height: playwright.Int(config.Height),
 		},
 	})
 

@@ -116,4 +116,4 @@ sudo sed -i -E 's/(allowed_users=)console/\1anybody/' /etc/X11/Xwrapper.config
 - [ ] ~~Consolidate config files into a single JavaScript file, if possible~~
 - [ ] Manually rotate through streams
 - [ ] Describe installing Playwright with Chromium on Raspberry Pi
-- [ ] Move display dimensions to config file
+- [x] Move display dimensions to config file
