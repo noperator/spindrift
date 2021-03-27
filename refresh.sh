@@ -7,6 +7,7 @@ echo 'Clearing old screenshots.'
 find "$DIR/img" -iname '*.png' -delete
 
 # Pull latest screenshots.
+mkdir -p img
 "$HOME/go/bin/check-forecast"
 
 # Reload page.
