@@ -1,4 +1,4 @@
-module spindrift
+module check-forecast
 
 go 1.16
 

@@ -7,6 +7,8 @@ if [[ "$UID" -ne 0 ]]; then
     sudo true
 fi
 
+mkdir -p img
+
 # https://github.com/nodesource/distributions#debinstall
 errcho 'Installing Node.js APT source...'
 curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
@@ -18,7 +20,7 @@ sudo apt install -y \
     chromium-browser \
     nodejs jq
 
-errcho 'Installing Spindrift forecast checker...'
+errcho 'Installing forecast checker...'
 go install
 
 # https://github.com/vi/websocat

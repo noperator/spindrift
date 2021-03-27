@@ -7,7 +7,7 @@ echo 'Clearing old screenshots.'
 find "$DIR/img" -iname '*.png' -delete
 
 # Pull latest screenshots.
-"$HOME/go/bin/spindrift"
+"$HOME/go/bin/check-forecast"
 
 # Reload page.
 source "$DIR/devtools.sh"
