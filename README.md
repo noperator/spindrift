@@ -26,8 +26,8 @@ As a bit of background on the `.m3u8` HLS live cam streams that Spindrift displa
 
 - Fetches hourly forecast data with Playwright scheduled in a cron job
 - Renders the forecast, along with live cam streams, in Chromium running in kiosk mode and controlled by DevTools Protocol on a standalone X server
-- Runs on a "headless" Raspberry Pi controlled remotely via SSH
-- (Optional) Displays on an old, beautiful, hacked Apple iMac G4 17" 1440x900 px
+- Runs on a headless Raspberry Pi controlled remotely via SSH
+- (Optional) Displays on an old, beautiful, hacked Apple iMac G4 17" at 1440 × 900 px
 
 ### Built with
 
@@ -77,7 +77,7 @@ Configure `config/streams.js` with the HLS live cam streams you'd like to displa
 "source":   "Surfline"
 ```
 
-Note that this was developed with a 1440 x 900 px display in mind. If you need to make any display adjustments, you may do so in `check-forecast.go, `launch.sh`, and `style.css`.
+Note that this was developed with a 1440 × 900 px display in mind. If you need to make any display adjustments, you may do so in `check-forecast.go`, `launch.sh`, and `style.css`.
 
 ### Usage
 
