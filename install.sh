@@ -27,8 +27,8 @@ sudo chmod +x /usr/local/bin/websocat
 
 # Schedule cron jobs.
 (crontab -l; echo '
-@reboot    /bin/bash /home/pi/spindrift/startx.sh   # Start spindrift.
-0 *  * * * /bin/bash /home/pi/spindrift/refresh.sh  # Refresh forecast.
+@reboot    /bin/bash "$HOME/spindrift/startx.sh"   # Start spindrift.
+0 *  * * * /bin/bash "$HOME/spindrift/refresh.sh"  # Refresh forecast.
 0 8  * * * /usr/bin/vcgencmd display_power 1        # Turn on display.
 0 22 * * * /usr/bin/vcgencmd display_power 0        # Turn off display.
 ') | sort -ru | sed '/^$/d' | crontab -
