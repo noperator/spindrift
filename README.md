@@ -41,7 +41,7 @@ As a bit of background on the `.m3u8` HLS live cam streams that Spindrift displa
 
 ### Prerequisites
 
-If needed, [install Raspbian](https://github.com/noperator/guides/blob/master/install_raspbian.md).
+Install [Raspberry Pi OS](https://www.raspberrypi.org/software/) and [Golang](https://golang.org/doc/install). Note that when installing Golang, it's important to download the latest release available on the official Go downloads page, since APT's version is generally out of date.
 
 ### Install
 
