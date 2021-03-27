@@ -48,7 +48,7 @@ If needed, [install Raspbian](https://github.com/noperator/guides/blob/master/in
 Clone this repo to your home directory, and run the installer script.
 
 ```
-git clone https://github.com/noperator/spindrift && cd spindrift
+git -C "$HOME" clone https://github.com/noperator/spindrift && cd spindrift
 ./install.sh
 ```
 
