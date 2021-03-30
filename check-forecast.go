@@ -152,16 +152,16 @@ func main() {
 	config := Config{}
 	err = toml.Unmarshal(configFile, &config)
 	assertErrorToNilf("could not load config: %v", err)
-	// fmt.Println(config)
 
 	// Load Playwright, browser, and page.
 	log.Println("setting up")
-	pw, err := playwright.Run()
+	pw, err := playwright.Run(&playwright.RunOptions{
+		SkipInstallBrowsers: true,
+	})
 	assertErrorToNilf("could not start playwright: %v", err)
 	browser, err := pw.Chromium.Launch(playwright.BrowserTypeLaunchOptions{
 		Headless:       playwright.Bool(!*headful),
 		ExecutablePath: playwright.String("/usr/bin/chromium-browser"),
-		// DownloadsPath: playwright.String(filepath.Join(usr.HomeDir, "Downloads")),
 	})
 	assertErrorToNilf("could not launch browser: %v", err)
 	context, err := browser.NewContext(playwright.BrowserNewContextOptions{

@@ -95,37 +95,21 @@ You can also manually refresh it:
 
 ### Troubleshooting
 
-When first running `check-forecast`, it'll try to download x86 browsers even though we're BYOB (i.e., we're specifying our own ARM-compatible Chromium via Playwright's `ExecutablePath` option); there's currently [no way to stop](https://github.com/mxschmitt/playwright-go/issues/52) browsers from downloading. You'll probably see an error like this:
+When first running `check-forecast`, you'll probably see an `Exec format error` like this:
 
 ```
 2021/03/27 16:12:12 Downloading driver to /home/pi/.cache/ms-playwright-go/1.10.0-next-1615230258000
 2021/03/27 16:12:19 Downloaded driver successfully
-2021/03/27 16:12:19 Downloading browsers...
 /home/pi/.cache/ms-playwright-go/1.10.0-next-1615230258000/playwright.sh: 3: /home/pi/.cache/ms-playwright-go/1.10.0-next-1615230258000/playwright.sh: /home/pi/.cache/ms-playwright-go/1.10.0-next-1615230258000/node: Exec format error
-2021/03/27 16:12:20 could not start playwright: could not install driver: could not install browsers: exit status 2
+2021/03/27 16:12:20 could not start playwright
 ```
 
 That's because the Playwright driver brought its own x86 version of Node.js, and that won't run on this ARM-based Raspberry Pi. We can fix this by replacing that `node` binary with a link to a different one that'll work on this platform:
 
 ```
-PW_NODE="$(find $HOME/.cache/ms-playwright-go -maxdepth 2 -name node)"
+PW_NODE="$(find $HOME/.cache/ms-playwright-go -maxdepth 2 -name node -printf '%T@ %p\n' | sort -n | tail -n 1 | awk '{$1 = ""; sub(/^ +/, "", $0); print $0}')"
 mv "$PW_NODE" "$PW_NODE.bu.$(date +%s)"
 ln -s "$(which node)" "$PW_NODE"
-```
-
-Run `check-forecast` again, and you'll see:
-
-```
-2021/03/27 16:29:32 Downloading browsers...
-Downloading chromium v857950 - 126.3 Mb [====================] 100% 0.0s
-chromium v857950 downloaded to /home/pi/.cache/ms-playwright/chromium-857950
-Downloading webkit v1443 - 78.2 Mb [====================] 100% 0.0s
-webkit v1443 downloaded to /home/pi/.cache/ms-playwright/webkit-1443
-Downloading firefox v1234 - 72.2 Mb [====================] 100% 0.0s
-firefox v1234 downloaded to /home/pi/.cache/ms-playwright/firefox-1234
-Downloading ffmpeg v1005 - 2.6 Mb [====================] 100% 0.0s
-ffmpeg v1005 downloaded to /home/pi/.cache/ms-playwright/ffmpeg-1005
-2021/03/27 16:33:38 Downloaded browsers successfully
 ```
 
 If needed, fix `startx` error, "Only console users are allowed to run the X server."
