@@ -166,7 +166,7 @@ func main() {
 	assertErrorToNilf("could not launch browser: %v", err)
 	context, err := browser.NewContext(playwright.BrowserNewContextOptions{
 		AcceptDownloads:   playwright.Bool(true),
-		UserAgent:         playwright.String("User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"),
+		UserAgent:         playwright.String("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"),
 		DeviceScaleFactor: playwright.Float(2),
 		Viewport: &playwright.BrowserNewContextOptionsViewport{
 			Width:  playwright.Int(config.Width),
